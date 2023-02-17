@@ -13,16 +13,21 @@ namespace EnableDisableMods
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Waiting for Your Only Move Is HUSTLE to close...");
             while (Process.GetProcessesByName("YourOnlyMoveIsHUSTLE").Length != 0)
             {
-                Thread.Sleep(3000);
+                Thread.Sleep(1000);
             }
-            for (int i = 0; i < args.Length; i += 2)
-            {
-                string p1 = args[i];
-                string p2 = args[i + 1];
 
-                Console.WriteLine($"Attempting to {(p1.Contains("zip") ? "disable" : "enable")} {p1.Split('/').Last().Split('.')[0]}");
+            string exeLocation = args[0];
+
+            for (int i = 1; i < args.Length; i += 3)
+            {
+                string name = args[i];
+                string p1 = args[i + 1];
+                string p2 = args[i + 2];
+
+                Console.WriteLine($"Attempting to {(p1.Contains("zip") ? "disable" : "enable")} {name}");
                 if (File.Exists(p1))
                 {
                     try
@@ -42,7 +47,8 @@ namespace EnableDisableMods
             }
             Console.WriteLine("Press enter to close...");
             Console.ReadLine();
-            Process.Start("steam://run/2212330");
+            Process.Start(exeLocation);
+            Environment.Exit(0);
         }
     }
 }
